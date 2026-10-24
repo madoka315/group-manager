@@ -68,7 +68,7 @@ async def member_silence(bot, ev, uid, sid, gid, time, no_message):
         await bot.send(ev, '\n不给我管理员还想让我帮忙塞口球？做梦去吧！', at_sender=True)
         return
     if not time.isdigit() and '*' not in time:
-        await bot.send(ev)# '憨批，时长都能输错？'
+        return
     else:
         if uid == sid or priv.check_priv(ev,priv.NORMAL):
             try:
