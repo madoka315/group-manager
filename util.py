@@ -134,6 +134,7 @@ async def card_edit(bot, ev, uid, sid, gid, card_text):
     self_info = await self_member_info(bot, ev, gid)
     if self_info['role'] != 'owner' and self_info['role'] != 'admin':
         await bot.send(ev, '\n我日，不给我管理改锤子名片', at_sender=True)
+        return
     if uid == sid or priv.check_priv(ev,priv.ADMIN):
         try:
             await bot.set_group_card(
