@@ -230,3 +230,31 @@ async def send_group_notice(bot, ev):
     gid = ev.group_id
     text = ev.message.extract_plain_text()
     await util.group_notice(bot, ev, gid, text)
+
+@sv.on_prefix('setadmin')
+async def setadmin(bot, ev):
+    if not priv.check_priv(ev,priv.SUPERUSER):
+        return
+    gid = ev.group_id
+    sid = None
+    for m in ev.message:
+        if m.type == 'at' and m.data['qq'] != 'all':
+            sid = int(m.data['qq'])
+    if sid is None:
+        await bot.send(ev, '请@需要设置管理的人哦', at_sender=True)
+        return
+    await bot.set_group_admin(group_id=gid, user_id=sid, enable=True)
+
+@sv.on_prefix('removeadmin')
+async def removeadmin(bot, ev):
+    if not priv.check_priv(ev,priv.SUPERUSER):
+        return
+    gid = ev.group_id
+    sid = None
+    for m in ev.message:
+        if m.type == 'at' and m.data['qq'] != 'all':
+            sid = int(m.data['qq'])
+    if sid is None:
+        await bot.send(ev, '请@需要取消管理的人哦', at_sender=True)
+        return
+    await bot.set_group_admin(group_id=gid, user_id=sid, enable=False)
