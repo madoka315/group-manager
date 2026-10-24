@@ -160,8 +160,8 @@ async def group_name(bot, ev, gid, name_text):
         try:
             await bot.set_group_name(
 			    group_id = gid,
-			    name = name_text
+			    group_name = name_text
 			)
             await bot.send(ev, f'群名已修改为“{name_text}”啦')
         except Exception as e:
-            await bot.send(ev, '群名修改失败惹...\n错误代码：{e}', at_sender=True)
+            await bot.send(ev, f'群名修改失败惹...\n错误代码：{e}', at_sender=True)
