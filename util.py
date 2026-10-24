@@ -166,3 +166,21 @@ async def group_name(bot, ev, gid, name_text):
             await bot.send(ev, f'群名已修改为“{name_text}”啦')
         except Exception as e:
             await bot.send(ev, f'群名修改失败惹...\n错误代码：{e}', at_sender=True)
+
+#群公告发送
+async def group_notice(bot, ev, gid, text):
+    self_info = await self_member_info(bot, ev, gid)
+    if self_info['role'] != 'owner' and self_info['role'] != 'admin':
+        await bot.send(ev, '\n我还没获得管理权限呢...', at_sender=True)
+        return
+    if not priv.check_priv(ev,priv.ADMIN):
+        await bot.send(ev, '只有管理才能发公告哦！', at_sender=True)
+    else:
+        try:
+            await bot._send_group_notice(
+                group_id = gid,
+                content = text
+            )
+            await bot.send(ev, '公告发送成功啦')
+        except Exception as e:
+            await bot.send(ev, f'发送失败惹...\n错误代码：{e}', at_sender=True)
