@@ -70,7 +70,7 @@ async def member_silence(bot, ev, uid, sid, gid, time, no_message):
     if not time.isdigit() and '*' not in time:
         return
     else:
-        if uid == sid or priv.check_priv(ev,priv.NORMAL):
+        if uid == sid or priv.check_priv(ev,priv.ADMIN):
             try:
                 await bot.set_group_ban(
                     group_id = gid,
